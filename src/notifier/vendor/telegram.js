@@ -1,6 +1,6 @@
 import { doPost } from '../util.js'
 
-async function sendServerChan({ title = '', content = '', botToken, user }) {
+async function sendTelegram({ title = '', content = '', botToken, user }) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`
   const data = {
     chat_id: user,
@@ -12,4 +12,4 @@ async function sendServerChan({ title = '', content = '', botToken, user }) {
     .catch((e) => ({ success: false, msg: `Telegram 推送失败: ${e}` }))
 }
 
-export default sendServerChan
+export default sendTelegram

@@ -118,42 +118,42 @@ async function grabCoupon(cookie, gundamId, guard) {
   const availCoupons = couponList.filter((coupon) =>
     [fetchStatus.CAN_FETCH].includes(coupon.status)
   )
-  const results = Promise.all(
-    availCoupons
-      .map(async (coupon) => {
-        const payload = getPayload(
-          {
-            referId: coupon.couponReferId,
-            gdId: tmplData.gdId,
-            pageId: tmplData.pageId,
-            instanceId: ticketConfig.instanceId
-          },
-          guard
-        )
-        const res = await request.post(
-          `https://promotion.waimai.meituan.com/lottery/couponcomponent/fetchcomponentcoupon/v2`,
-          payload.body,
-          {
-            cookie,
-            params: payload.query,
-            headers: {
-              mtgsig: '{}',
-              Origin: actUrl.origin,
-              Referer: actUrl.origin + '/'
-            }
+  const results = await Promise.all(
+    availCoupons.map(async (coupon) => {
+      const payload = getPayload(
+        {
+          referId: coupon.couponReferId,
+          gdId: tmplData.gdId,
+          pageId: tmplData.pageId,
+          instanceId: ticketConfig.instanceId
+        },
+        guard
+      )
+      const res = await request.post(
+        `https://promotion.waimai.meituan.com/lottery/couponcomponent/fetchcomponentcoupon/v2`,
+        payload.body,
+        {
+          cookie,
+          params: payload.query,
+          headers: {
+            mtgsig: '{}',
+            Origin: actUrl.origin,
+            Referer: actUrl.origin + '/'
           }
-        )
-
-        if (res.code == 0) {
-          return coupon
         }
+      )
 
-        return null
-      })
-      .filter(Boolean)
+      if (res.code == 0) {
+        return coupon
+      }
+
+      return null
+    })
   )
 
-  return formatCoupons(results, {
+  const claimedCoupons = results.filter(Boolean)
+
+  return formatCoupons(claimedCoupons, {
     actName: tmplData.actName,
     useCondition: ticketConfig.desc
   })

@@ -12,7 +12,7 @@ async function getLatestRelease(timeout = 5000) {
     }
   )
 
-  const info = res.filter((e) => !e.draft || !e.prerelease)[0]
+  const info = res.filter((e) => !e.draft && !e.prerelease)[0]
 
   return {
     tag: info.tag_name,
