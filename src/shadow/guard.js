@@ -16,7 +16,7 @@ async function wbus(input) {
 
   wasi.setStdinString(JSON.stringify(input))
 
-  const exitCode = wasi.start()
+  wasi.start()
   const stdout = wasi.getStdoutString()
   const result = JSON.parse(stdout)
 

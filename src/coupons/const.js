@@ -8,12 +8,6 @@ const ECODE = {
 
 const mainActConf = { gid: '2KAWnD', name: '外卖红包天天领' }
 
-// 抽奖活动
-const lotteryActConfs = [
-  { gid: '1VlhFT', name: '美团神会员' }
-  // { gid: '2NjTfR', name: '公众号周三外卖节专属福利' }
-]
-
 // 神券活动
 const gundamActConfs = [
   { gid: '4luWGh', name: '品质优惠天天领' },
@@ -27,4 +21,4 @@ const wxfwhActConfs = [
   { gid: '1HgnjG', name: '神奇福利社' }
 ]
 
-export { ECODE, gundamActConfs, mainActConf, wxfwhActConfs, lotteryActConfs }
+export { ECODE, gundamActConfs, mainActConf, wxfwhActConfs }

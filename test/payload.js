@@ -2,8 +2,7 @@ import { beforeAll, expect, test } from 'vitest'
 import { getTemplateData } from '../src/template.js'
 import ShadowGuard from '../src/shadow/index.js'
 import gundam from '../src/coupons/gundam.js'
-import wxfwh from '../src/coupons/wxfwh.js'
-import { mainActConf, wxfwhActConfs } from '../src/coupons/const.js'
+import { mainActConf } from '../src/coupons/const.js'
 import { createMTCookie, parseToken } from '../src/user.js'
 
 const guard = new ShadowGuard()

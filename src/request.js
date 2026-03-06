@@ -2,7 +2,6 @@ import tough from 'tough-cookie'
 import timeoutSignal from 'timeout-signal'
 import HttpsProxyAgent from 'https-proxy-agent'
 
-const cookieJarMap = new Map()
 const UA =
   'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'
 
@@ -32,8 +31,8 @@ async function request(url, opts = {}) {
     defHeader.cookie = existCookie + ';' + optCookie
   }
 
-  if (fetch._proxyAgent) {
-    opts.agent = fetch._proxyAgent
+  if (request._proxyAgent) {
+    opts.agent = request._proxyAgent
   } else if (opts.proxy) {
     opts.agent = new HttpsProxyAgent(opts.proxy)
   }
@@ -71,13 +70,13 @@ async function request(url, opts = {}) {
       throw { code: ECODE.TIMEOUT, req: urlObj, msg: e }
     }
 
-    throw { code: ECODE.FETCH, req: urlObj, msg: res.statusText }
+    throw { code: ECODE.FETCH, req: urlObj, msg: e.message || e }
   }
 
   const setCookies = res.headers['set-cookie']
 
   if (setCookies) {
-    setCookies.map((cookie) =>
+    setCookies.forEach((cookie) =>
       cookieJar?.setCookieSync(cookie, res.url, { ignoreError: true })
     )
   }
@@ -132,12 +131,8 @@ request.setProxyAgent = (url) => {
   request._proxyAgent = new HttpsProxyAgent(url)
 }
 
-export function createCookieJar(id) {
-  const cookieJar = new tough.CookieJar()
-
-  cookieJarMap.set(id, cookieJar)
-
-  return cookieJar
+export function createCookieJar() {
+  return new tough.CookieJar()
 }
 
 export default request

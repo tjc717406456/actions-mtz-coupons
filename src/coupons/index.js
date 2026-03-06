@@ -1,9 +1,8 @@
 import request from '../request.js'
 import ShadowGuard from '../shadow/index.js'
 import { createMTCookie, getUserInfo } from '../user.js'
-import { mainActConf, gundamActConfs, wxfwhActConfs, ECODE } from './const.js'
+import { mainActConf, gundamActConfs, ECODE } from './const.js'
 import gundam from './gundam.js'
-import wxfwh from './wxfwh.js'
 
 async function runTask(cookie, guard) {
   try {
@@ -18,10 +17,6 @@ async function runTask(cookie, guard) {
       ...gundamActConfs.map((conf) =>
         gundam.grabCoupon(cookie, conf.gid, guard).catch(() => [])
       )
-      // 微信服务号活动
-      // ...wxfwhActConfs.map((conf) =>
-      //   wxfwh.grabCoupon(cookie, conf.gid, guard).catch(() => [])
-      // )
     ])
 
     results.push(...asyncResults.flat())

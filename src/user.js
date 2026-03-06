@@ -36,15 +36,6 @@ function parseToken(token) {
   return [].concat(token).map(tokenFormat)
 }
 
-async function getMTUerId() {
-  const rep = await request('https://h5.waimai.meituan.com/waimai/mindex/home')
-
-  const repCookie = rep.headers.get('set-cookie') || ''
-  const matchArr = repCookie.match(/userId=(\w+)/) || []
-
-  return matchArr[1] || ''
-}
-
 async function getUserInfo(cookie, guard) {
   const res = await request.post(
     'https://mediacps.meituan.com/gundam/gundamLogin',
@@ -78,4 +69,4 @@ function createMTCookie(token) {
   return cookieJar
 }
 
-export { createMTCookie, getUserInfo, getMTUerId, parseToken }
+export { createMTCookie, getUserInfo, parseToken }

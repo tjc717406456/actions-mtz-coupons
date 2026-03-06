@@ -5,10 +5,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 import ShadowGuard from '../src/shadow/index.js'
 import { createMTCookie, parseToken } from '../src/user.js'
 import { grabCoupons, ECODE } from '../src/coupons/index.js'
-import { mainActConf, wxfwhActConfs } from '../src/coupons/const.js'
+import { mainActConf } from '../src/coupons/const.js'
 import gundam from '../src/coupons/gundam.js'
-import wxfwh from '../src/coupons/wxfwh.js'
-import lottery from '../src/coupons/lottery.js'
 
 const guard = new ShadowGuard()
 const tokens = parseToken(process.env.TOKEN)
